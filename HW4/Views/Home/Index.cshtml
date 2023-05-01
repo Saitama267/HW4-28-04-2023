@@ -2,21 +2,21 @@
 <form id="UserForm">
     <div class="row mt-2">
         <div class="col-6">
-            <label>Student Id</label>
-            <input asp-for="Email" class="form-control" id="StudentId" autocomplete="off" />
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" id="Email" autocomplete="off" />
             <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
     <div class="row mt-2">
         <div class="col-6">
-            <label>Student Name</label>
+            <label>Name</label>
             <input asp-for="Name" class="form-control" id="Name" autocomplete="off" />
             <span class="text-danger" asp-validation-for="Name"></span>
         </div>
     </div>
     <div class="row mt-2">
         <div class="col-6">
-            <button class="btn btn-primary" type="button" onclick="SaveStudent()"> Submit </button>
+            <button class="btn btn-primary" type="button" onclick="SaveUser()"> Submit </button>
         </div>
     </div>
 
@@ -30,23 +30,24 @@
             $.validator.unobtrusive.parse($("#UserForm"));
         })
 
-        function SaveStudent() {
-            if ($("#UserForm").valid()) {
-                var formData = $("#UserForm").serialize();
-                console.log(formData);
-                $.ajax({
-                    url: "/Home/UserRegistration",
-                    type: "POST",
-                    data: formData,
-                    success: function (response) {
-                        alert(response);
-                    },
-                    error: function (request, status, error) {
-                        alert(request.responseText);
-                    }
-
-                });
+        function SaveUser() {
+            let formData = {
+                Email: $("#Email").val(),
+                Name: $("#Name").val(),
             }
+            console.log(formData)
+            $.ajax({
+                url: "/Home/SetData",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    alert(response);
+                     window.location.assign('@Url.Action("UserRegistration", "Home")')
+                },
+                error: function(request, status, error) {
+                    alert(request.responseText);
+                }
+            });
         }
     </script>
 }
