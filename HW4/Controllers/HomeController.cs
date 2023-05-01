@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HW4.Models
+using HW4.Models;
 
 namespace HW4.Controllers
 {

@@ -1,18 +1,52 @@
 ﻿@model User
-<div class="row mt-2">
-    <div class="col-6">
-        <label>Student Id</label>
-        <input class="form-control" id="Email"  autocomplete="off" />
+<form id="UserForm">
+    <div class="row mt-2">
+        <div class="col-6">
+            <label>Student Id</label>
+            <input asp-for="Email" class="form-control" id="StudentId" autocomplete="off" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
     </div>
-</div>
-<div class="row mt-2">
-    <div class="col-6">
-        <label>Student Name</label>
-        <input class="form-control" id="Name" autocomplete="off" />
+    <div class="row mt-2">
+        <div class="col-6">
+            <label>Student Name</label>
+            <input asp-for="Name" class="form-control" id="Name" autocomplete="off" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
     </div>
-</div>
-<div class="row mt-2">
-    <div class="col-6">
-        <button class="btn btn-primary" type="button" onclick="SaveStudent()"> Save </button>
+    <div class="row mt-2">
+        <div class="col-6">
+            <button class="btn btn-primary" type="button" onclick="SaveStudent()"> Submit </button>
+        </div>
     </div>
-</div>
+
+</form>
+@section Scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            $.validator.unobtrusive.parse($("#UserForm"));
+        })
+
+        function SaveStudent() {
+            if ($("#UserForm").valid()) {
+                var formData = $("#UserForm").serialize();
+                console.log(formData);
+                $.ajax({
+                    url: "/Home/UserRegistration",
+                    type: "POST",
+                    data: formData,
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+
+                });
+            }
+        }
+    </script>
+}
