@@ -19,18 +19,22 @@ namespace HW4.Controllers
         [HttpPost]
         public IActionResult SetData(User user)
         {
-
-            if (user.Email == null || user.Name==null)
+            if (ModelState.IsValid)
             {
-                return Content("false");
+                if (user.Email == null || user.Name == null)
+                {
+                    return Content("false");
+                }
+                UserStorage.Users.Add(user);
+                return Content("true");
             }
-            UserStorage.Users.Add(user);
-            return Content("true");
+            return Content("false");
+           
         }
 
         public IActionResult UserRegistration()
         {
-            return View(UserStorage.Users.First());
+            return View(UserStorage.Users.Last());
         }
     }
 }
