@@ -34,7 +34,7 @@ namespace HW4
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                
             }
             app.UseStaticFiles();
 
